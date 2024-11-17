@@ -60,7 +60,12 @@ library(palmerpenguins)
 ui <- fluidPage(
   titlePanel("Palmer Penguins"),
   sidebarLayout(
-    sidebarPanel(),
+    sidebarPanel(
+      selectInput("speciesInput", "Species", choices = c("Adelie", "Chinstrap", "Gentoo"), multiple = TRUE),
+      selectInput("islandInput", "Island", choices = c("Biscoe", "Dream", "Torgersen"), multiple = TRUE),
+      checkboxGroupInput("sexInput", "Sex", choices = c("female", "male")),
+      downloadButton("downloadOutput", "Download Table", icon("Download"))
+    ),
     mainPanel(DT::dataTableOutput("pengs"))
   )
 )
@@ -69,6 +74,10 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   output$pengs <- DT::renderDataTable(penguins)
+  output$downloadOutput <- downloadHandler("Palmer Penguins Table.csv", content = function(file) {
+    write.csv(PalmerPenguinTable, file)
+  }
+  )
 }
 
 # The following line MUST be the last line in the file; delete anything after it before running the app
