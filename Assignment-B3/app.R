@@ -59,12 +59,17 @@ library(palmerpenguins)
 
 ui <- fluidPage(
   titlePanel("Palmer Penguins"),
-  
+  sidebarLayout(
+    sidebarPanel(),
+    mainPanel(DT::dataTableOutput("pengs"))
+  )
 )
 
 # Code the server below
 
-server <- function(input, output) {}
+server <- function(input, output) {
+  output$pengs <- DT::renderDataTable(penguins)
+}
 
 # The following line MUST be the last line in the file; delete anything after it before running the app
 
