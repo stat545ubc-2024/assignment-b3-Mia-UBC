@@ -58,14 +58,31 @@ library(palmerpenguins)
 # Code the ui below
 
 ui <- fluidPage(
+  
+  # App Title
   titlePanel("Palmer Penguins"),
+  
+  # Create a sidebar and main panel
   sidebarLayout(
+    
+    # Code for features in the sidebar
     sidebarPanel(
+      
+      # Select which species the table will display. Can select multiple species if desired. This allows for the user to only see data from the species, singular or plural, that they are interested in.
       selectInput("speciesInput", "Species", choices = c("Adelie", "Chinstrap", "Gentoo"), multiple = TRUE),
+      
+      # Select which inland(s) the table will display. This allows for the user to only see data from the island(s) that they are interested in.
       selectInput("islandInput", "Island", choices = c("Biscoe", "Dream", "Torgersen"), multiple = TRUE),
+      
+      # Select which sex(es) the table will display. This allows for the user to only see data from the sex(es) that they are interested in.
       checkboxGroupInput("sexInput", "Sex", choices = c("female", "male")),
+      
+      # Download the produced table. This allows the user to download the table with the data filters they have applied as a .csv file, so that they can use it as they please.
       downloadButton("downloadOutput", "Download Table", icon("Download"))
     ),
+    
+    # Code for features in the main panel. 
+    ## This produces a table from the palmer penguins dataset. As the DT package is used, the produced table has several filtering features, which allow the user to sort the data as they desire.
     mainPanel(DT::dataTableOutput("pengs"))
   )
 )
@@ -73,7 +90,11 @@ ui <- fluidPage(
 # Code the server below
 
 server <- function(input, output) {
+  
+  # Renders the table in the main panel
   output$pengs <- DT::renderDataTable(penguins)
+  
+  # Allows the download button to function. This will write the data as a .csv file.
   output$downloadOutput <- downloadHandler("Palmer Penguins Table.csv", content = function(file) {
     write.csv(PalmerPenguinTable, file)
   }
