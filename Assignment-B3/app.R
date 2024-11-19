@@ -69,8 +69,7 @@ ui <- fluidPage(
     sidebarPanel(
       
       # Select which species the table will display. Can select multiple species if desired. This allows for the user to only see data from the species, singular or plural, that they are interested in.
-      selectInput("speciesInput", "Species", choices = c("Adelie", "Chinstrap", "Gentoo"), multiple = TRUE),
-      
+      selectInput("speciesIN", "species", choices = levels(penguins$species)),
       # Select which inland(s) the table will display. This allows for the user to only see data from the island(s) that they are interested in.
       selectInput("islandInput", "Island", choices = c("Biscoe", "Dream", "Torgersen"), multiple = TRUE),
       
@@ -83,16 +82,20 @@ ui <- fluidPage(
     
     # Code for features in the main panel. 
     ## This produces a table from the palmer penguins dataset. As the DT package is used, the produced table has several filtering features, which allow the user to sort the data as they desire.
-    mainPanel(DT::dataTableOutput("pengs"))
+    mainPanel(tableOutput("my_table"))
   )
 )
 
 # Code the server below
 
 server <- function(input, output) {
-  
+
   # Renders the table in the main panel
-  output$pengs <- DT::renderDataTable(penguins)
+  #output$pengs <- DT::renderDataTable(penguins)
+  
+  output$my_table <- renderTable({
+   subset(penguins, species == input$speciesIN)
+   })
   
   # Allows the download button to function. This will write the data as a .csv file.
   output$downloadOutput <- downloadHandler("Palmer Penguins Table.csv", content = function(file) {
