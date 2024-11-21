@@ -1,6 +1,6 @@
 
 # Welcome to my shiny app
-## This code builds a shiny app which will allow the user to filter the palmer penguins dataset and download the resulting table.
+## This code builds a shiny app which will allow the user to filter the palmer penguins dataset by penguin species, island, and sex.
 
 library(shiny)
 
@@ -48,7 +48,7 @@ ui <- fluidPage(
 
 server <- function(input, output) {
 
-  # Renders the table in the main panel. As the DT package is used, this also implements several features for filtering and searching the data.
+  # Applies the filters selected by the inputs in the side panel (i.e. filters the dataset by species, island, and sex)
   
   filtered_penguins <- reactive({
     penguins %>% 
@@ -58,6 +58,8 @@ server <- function(input, output) {
         (is.null(input$sexIN) | sex %in% input$sexIN)
       )
   })
+  
+  # Renders the table in the main panel. As the DT package is used, this also implements several features for filtering and searching the data.
   
   output$my_table <- DT::renderDataTable({
     filtered_penguins()
