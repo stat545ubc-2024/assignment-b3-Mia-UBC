@@ -1,0 +1,12 @@
+name: Assignment-B3
+title: Assignment-B3
+username: mia-ubc
+account: mia-ubc
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13417261
+bundleId: 9398986
+url: https://mia-ubc.shinyapps.io/Assignment-B3/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
