@@ -6,7 +6,7 @@ This app allows the user to do some basic filtering of the *penguins* dataset fr
 
 ## Description of contents
 
-
+This repository contains one folder, entitled "Assignment-B3". This folder contains the file with the code for my app, "app.R", and a folder entitled "rsconnect/shinyapp.io/mia-ubc". The file can be run in R, and all the required libraries are specified at the top of the file. The folder contains the "Assignment-B3.dcf" file, which is responsible for publishing my app to the shiny.io servers.
 
 ---
 
